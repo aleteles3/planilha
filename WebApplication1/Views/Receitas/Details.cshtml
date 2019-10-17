@@ -1,0 +1,82 @@
+﻿@model WebApplication1.Models.Classes.Receita
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Receita</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoReceita)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoReceita)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormaRecebimento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormaRecebimento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataRecebimento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataRecebimento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Parcelamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parcelamento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroParcelas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroParcelas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Observacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Observacao)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <title>Index</title>
+</head>
+<body>
+    <div id="chartContainer" style="width: 90%; height: 400px;display: inline-block;"></div>
+    <br /><br />
+    <div id="chartContainer2" style="width: 45%; height: 400px;display: inline-block;"></div>
+    <div id="chartContainer3" style="width: 45%; height: 400px;display: inline-block;"></div>
+
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var chart1 = new CanvasJS.Chart("chartContainer", {
+				theme: "light2",
+				animationEnabled: true,
+				title: {
+					text: "Saldos Mensais"
+				},
+				subtitles: [
+					{ text: "Intervalo de 12 meses" }
+                ],
+                axisX: {
+                    valueFormatString: "MMM",
+                    labelAngle: -75
+                },
+                axisY: {
+                    valueFormatString: "R$#,###.#0",
+                },
+				data: [
+                    {
+                        indexLabel: "{y} ",
+                        yValueFormatString: "R$#,###.#0",
+					type: "column", //change type to bar, line, area, pie, etc
+					dataPoints: @Html.Raw(ViewBag.DataPoints),
+				    }
+				]
+			});
+            chart1.render();
+
+            var chart2 = new CanvasJS.Chart("chartContainer2", {
+                title: {
+                    text: "Percentual de Despesas"
+                },
+                animationEnabled: true,
+                legend: {
+                    verticalAlign: "center",
+                    horizontalAlign: "left",
+                    fontSize: 20,
+                    fontFamily: "Helvetica"
+                },
+                theme: "light2",
+                data: [
+                    {
+                        type: "pie",
+                        startAngle: 180,
+                        toolTipContent: "<b>{label}</b>: {y}%",
+                        showInLegend: "true",
+                        legendText: "{label}",
+                        indexLabel: "{label} - {y}%",
+                        dataPoints: @Html.Raw(ViewBag.DataPointsDespesas),
+                    }
+                ]
+            });
+            chart2.render();
+
+         var chart3 = new CanvasJS.Chart("chartContainer3", {
+                title: {
+                    text: "Percentual de Receitas"
+                },
+                animationEnabled: true,
+                legend: {
+                    verticalAlign: "center",
+                    horizontalAlign: "left",
+                    fontSize: 20,
+                    fontFamily: "Helvetica"
+                },
+                theme: "light2",
+                data: [
+                    {
+                        type: "pie",
+                        startAngle: 180,
+                        toolTipContent: "<b>{label}</b>: {y}%",
+                        showInLegend: "true",
+                        legendText: "{label}",
+                        indexLabel: "{label} - {y}%",
+                        dataPoints: @Html.Raw(ViewBag.DataPointsReceitas),
+                    }
+                ]
+            });
+            chart3.render();
+		};
+    </script>
+
+</body>
+</html>

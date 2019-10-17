@@ -1,0 +1,102 @@
+﻿@model IEnumerable<WebApplication1.Models.Classes.Receita>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<form asp-controller="TiposdeReceita" asp-action="Index" method="get">
+    <p>
+        Pesquisar por tipo: @Html.TextBox("buscar")
+    </p>
+    <p>
+        Data de início: @Html.TextBox("buscarIni")
+        Data de fim: @Html.TextBox("buscarFim")
+    </p>
+    @Html.RadioButton("Tipo", "Todas", true) Todas
+    @Html.RadioButton("Tipo", "Ofx") Somente Importadas
+    <input type="submit" value="Pesquisar" />
+    </p>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoReceita)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormaRecebimento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataRecebimento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Valor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Parcelamento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeroParcelas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrimeiraDataVencimento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Observacao)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoReceita)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormaRecebimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataRecebimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Parcelamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroParcelas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrimeiraDataVencimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observacao)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+    <tfoot class="footer">
+        <tr>
+            <td colspan="3"><b>Total</b></td>
+            <td colspan="7">@Html.Raw(String.Format("<b>R$ {0:n2}</b>", @Model.Sum(i => i.Valor)))</td>
+        </tr>
+    </tfoot>
+</table>

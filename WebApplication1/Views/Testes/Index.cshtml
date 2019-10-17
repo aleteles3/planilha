@@ -1,0 +1,68 @@
+﻿@using WebApplication1.Models.Classes
+@model List<LancamentoOFX>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Upar", "Testes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h4>Carregar arquivo .xml</h4>
+    <input type="file" name="file" id="file" />
+    <input type="submit" value="Carregar" />
+}
+<br />
+<b>@ViewBag.Message</b>
+<br />
+@if (Model != null)
+{
+    <hr />
+    <h4>Lançamentos</h4>
+    using (Html.BeginForm("Importar", "Testes", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <table class="table">
+            <tr style="font-size:larger;border-bottom:solid">
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Data</th>
+                <th>Valor</th>
+            </tr>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                String color = "";
+                if (i % 2 != 0)
+                {
+                    color = "lightgrey";
+                }
+                <tr style="background-color: @color">
+                    <td>
+                        @Html.HiddenFor(x => Model[i].Tipo)
+                        @if (Model[i].Tipo.Equals("CREDIT"))
+                        {
+                            @Html.Raw("Receita");
+                        }
+                        @if (Model[i].Tipo.Equals("DEBIT"))
+                        {
+                            @Html.Raw("Despesa");
+                        }
+                    </td>
+                    <td>
+                        @Html.HiddenFor(x => Model[i].Descricao)
+                        @Html.DisplayFor(x => Model[i].Descricao)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(x => Model[i].DataRealizacao)
+                        @Html.DisplayFor(x => Model[i].DataRealizacao)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(x => Model[i].Valor)
+                        @Html.DisplayFor(x => Model[i].Valor)
+                    </td>
+                </tr>
+            }
+        </table>
+        <input type="submit" value="Importar" />
+    }
+}

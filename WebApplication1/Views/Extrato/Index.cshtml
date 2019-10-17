@@ -1,0 +1,118 @@
+﻿@using WebApplication1.Models.Classes
+@model List<ItemExtrato>
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+
+@{
+    float TotalDespesas = 0;
+    float TotalReceitas = 0;
+    foreach (ItemExtrato item in Model)
+    {
+        if (item.DataVencimento.Month == DateTime.Today.Month)
+        {
+            if (item.Tipo == 1)
+            {
+                TotalDespesas += item.Valor;
+            }
+            else
+            {
+                TotalReceitas += item.Valor;
+            }
+        }
+    }
+}
+<h2>Index</h2>
+<h4>Pesquisar</h4>
+<form asp-controller="Extrato" asp-action="Index" method="get">
+    <p>
+        Data de início: @Html.TextBox("buscarIni")
+    </p>
+    <p>
+        Data de fim: @Html.TextBox("buscarFim")
+    </p>
+    <p>
+        Nome do Banco: @Html.TextBox("banco")
+    </p>
+    <p>
+        @Html.RadioButton("Tipo", "todos", true) Todos
+        @Html.RadioButton("Tipo", "credito") Crédito
+        @Html.RadioButton("Tipo", "debito") Débito
+    </p>
+    <input type="submit" value="Pesquisar" />
+</form>
+@using (Html.BeginForm("ExportExcel", "Extrato"))
+{
+    <input type="submit" value="Exportar para Excel" />
+}
+@using (Html.BeginForm("GeneratePDF", "Extrato", FormMethod.Post))
+{
+    <div><input type="submit" value="Exportar para PDF" /></div>
+    //<a href="@Url.Action("ExportExcel", "Extrato")" style="">Exportar para Excel</a>
+    <h4>Extrato</h4>
+    <table class="table" style="background-color:silver">
+        <tr style="font-size: 18px">
+            <th>@DateTime.Today.ToString("MMMM/yyyy").ToUpper()</th>
+            <th>Total de Receitas: @Html.Raw(String.Format("R$ {0:n2}", TotalReceitas))</th>
+            <th>Total de Despesas: @Html.Raw(String.Format("R$ {0:n2}", TotalDespesas))</th>
+            <th>Saldo: @Html.Raw(String.Format("R$ {0:n2}", TotalReceitas - TotalDespesas))</th>
+        </tr>
+    </table>
+    <hr />
+    <table class="table">
+        <tr>
+            <th>Valor</th>
+            <th>Tipo/Nome</th>
+            <th>Data de Realização</th>
+            <th>Data de Vencimento</th>
+            <th>Pagamento</th>
+            <th>Saldo Parcial</th>
+            <th>Banco</th>
+        </tr>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            String color = "";
+            if (Model[i].Tipo == 1)
+            {
+                color = "Red";
+            }
+            else
+            {
+                color = "Blue";
+            }
+            <tr style="color: @color">
+                <td>
+                    @Html.HiddenFor(x => Model[i].Valor)
+                    @Html.DisplayFor(x => Model[i].Valor)
+                </td>
+                <td>
+                    @Html.HiddenFor(x => Model[i].Definicao)
+                    @Html.DisplayFor(x => Model[i].Definicao)
+                </td>
+                <td>
+                    @Html.HiddenFor(x => Model[i].DataRealizacao)
+                    @Html.DisplayFor(x => Model[i].DataRealizacao)
+                </td>
+                <td>
+                    @Html.HiddenFor(x => Model[i].DataVencimento)
+                    @Html.DisplayFor(x => Model[i].DataVencimento)
+                </td>
+                <td>
+                    @Html.HiddenFor(x => Model[i].Pagamento)
+                    @Html.DisplayFor(x => Model[i].Pagamento)
+                </td>
+                <td style="color: black; font-weight:bold">
+                    @Html.HiddenFor(x => Model[i].Saldo)
+                    @Html.DisplayFor(x => Model[i].Saldo)
+                </td>
+                <td style="color: black; font-weight:bold">
+                    @Html.HiddenFor(x => Model[i].NomeBanco)
+                    @Html.DisplayFor(x => Model[i].NomeBanco)
+                </td>
+            </tr>
+        }
+    </table>
+}

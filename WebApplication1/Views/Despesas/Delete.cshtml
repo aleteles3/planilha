@@ -1,0 +1,88 @@
+﻿@model WebApplication1.Models.Classes.Despesa
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Despesa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoDespesa.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoDespesa.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeDespesa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeDespesa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CaractDespesa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CaractDespesa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataRealizacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataRealizacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Parcelamento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parcelamento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroParcelas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroParcelas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VencimentoPrimeiraParcela)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VencimentoPrimeiraParcela)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
